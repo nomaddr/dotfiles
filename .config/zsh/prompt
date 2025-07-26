@@ -1,0 +1,23 @@
+# This file defines your Zsh prompt, migrated from your Bash 'prompt' file.
+# Zsh's prompt system is different from Bash's.
+
+# Bash-specific variables like force_color_prompt and color_prompt are removed.
+# Zsh handles colors in prompts differently.
+
+# Basic Zsh prompt:
+# %n: username
+# %m: hostname up to first dot
+# %~: current working directory (tildified)
+# %#: '#' for root, '%' for normal user
+# You can customize this heavily or use an Oh My Zsh theme.
+PROMPT='[%~]\uf0a9 '
+
+# Function to set the terminal window/pane title (similar to your Bash PS1 setup)
+# This uses Zsh's precmd function, which runs before each prompt.
+precmd() {
+  # Set the terminal title to the current working directory
+  print -P "\e]0;%~\a"
+}
+
+# If you want a more advanced prompt, consider installing powerlevel10k
+# and configuring it in your ~/.zshrc.

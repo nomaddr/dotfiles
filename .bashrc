@@ -1,3 +1,3 @@
-source ~/.local/share/omarchy/default/bash/rc
+source ~/.config/bash/rc
 
 export CHROME_OZONE_PLATFORM_HINT="auto"

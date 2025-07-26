@@ -1,0 +1,10 @@
+# This file mirrors your original ~/.config/bash/rc.
+# If your original rc file contained more specific Bash configurations,
+# you would adapt them here for Zsh.
+
+# Source Omarchy's Zsh-specific init file if it exists.
+# This assumes Omarchy provides a Zsh-specific 'init' file.
+# If not, you might need to manually copy content from the Bash 'init' file here.
+if [[ -f ~/.config/zsh/init ]]; then
+  source ~/.config/zsh/init
+fi

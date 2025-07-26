@@ -1,0 +1,18 @@
+# This file contains shell-specific configurations for Zsh,
+# migrated from your original Bash 'shell' file.
+
+# History control (Zsh equivalents for Bash's shopt and HISTCONTROL)
+# These are also set in ~/.zshrc for clarity, but can live here.
+setopt append_history
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt share_history
+HISTSIZE=32768
+HISTFILESIZE="${HISTSIZE}"
+
+# Autocompletion section from Bash is removed, as OMZ/Zsh handles it.
+
+# Set complete path (copied directly)
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$PATH"
+
+# 'set +h' is a Bash-ism and is not needed in Zsh.

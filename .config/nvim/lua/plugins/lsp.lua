@@ -5,30 +5,30 @@ return {
     opts = {
       servers = {
         -- Web Development Core
-        tsserver = {},           -- TypeScript/JavaScript
-        tailwindcss = {},        -- Tailwind CSS
-        html = {},               -- HTML support
-        cssls = {},              -- CSS support
-        emmet_ls = {},           -- Emmet abbreviations
-        jsonls = {},             -- JSON with schema validation
-        
+        tsserver = {}, -- TypeScript/JavaScript
+        tailwindcss = {}, -- Tailwind CSS
+        html = {}, -- HTML support
+        cssls = {}, -- CSS support
+        emmet_ls = {}, -- Emmet abbreviations
+        jsonls = {}, -- JSON with schema validation
+
         -- Systems & DevOps
-        bashls = {},             -- Bash scripting
-        yamlls = {},             -- YAML files
-        dockerls = {},           -- Dockerfile support
-        terraformls = {},        -- Terraform/HCL
-        
+        bashls = {}, -- Bash scripting
+        yamlls = {}, -- YAML files
+        dockerls = {}, -- Dockerfile support
+        terraformls = {}, -- Terraform/HCL
+
         -- Documentation & Config
-        marksman = {},           -- Markdown
-        lemminx = {},            -- XML support
-        taplo = {},              -- TOML files
-        
+        marksman = {}, -- Markdown
+        lemminx = {}, -- XML support
+        taplo = {}, -- TOML files
+
         -- Programming Languages
-        lua_ls = {},             -- Lua (for Neovim config)
-        clangd = {},             -- C/C++ (for game dev)
-        gopls = {},              -- Go
-        pyright = {},            -- Python
-        jdtls = {},              -- Java
+        lua_ls = {}, -- Lua (for Neovim config)
+        clangd = {}, -- C/C++ (for game dev)
+        gopls = {}, -- Go
+        pyright = {}, -- Python
+        jdtls = {}, -- Java
       },
     },
   },
@@ -46,19 +46,19 @@ return {
         "css",
         "json",
         "jsonc",
-        
+
         -- Systems & DevOps
         "bash",
         "yaml",
         "dockerfile",
-        "hcl",           -- Terraform
-        
+        "hcl", -- Terraform
+
         -- Documentation & Config
         "markdown",
         "markdown_inline",
         "xml",
         "toml",
-        
+
         -- Programming Languages
         "lua",
         "c",
@@ -66,7 +66,7 @@ return {
         "go",
         "python",
         "java",
-        
+
         -- Additional useful parsers
         "vim",
         "vimdoc",
@@ -101,21 +101,21 @@ return {
         "gopls",
         "pyright",
         "jdtls",
-        
+
         -- Formatters & Linters
-        "prettier",              -- Web dev formatting
-        "eslint_d",              -- JavaScript linting
-        "stylua",                -- Lua formatting
-        "shfmt",                 -- Shell script formatting
-        "shellcheck",            -- Shell script linting
-        "black",                 -- Python formatting
-        "isort",                 -- Python import sorting
-        "flake8",                -- Python linting
-        "gofumpt",               -- Go formatting
-        "golangci-lint",         -- Go linting
-        "clang-format",          -- C/C++ formatting
-        "yamlfmt",               -- YAML formatting
-        "google-java-format",    -- Java formatting
+        "prettier", -- Web dev formatting
+        "eslint_d", -- JavaScript linting
+        "stylua", -- Lua formatting
+        "shfmt", -- Shell script formatting
+        "shellcheck", -- Shell script linting
+        "black", -- Python formatting
+        "isort", -- Python import sorting
+        "flake8", -- Python linting
+        "gofumpt", -- Go formatting
+        "golangci-lint", -- Go linting
+        "clang-format", -- C/C++ formatting
+        "yamlfmt", -- YAML formatting
+        "google-java-format", -- Java formatting
       })
     end,
   },

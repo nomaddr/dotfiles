@@ -1,0 +1,6 @@
+# This file contains your environment variables, migrated from your Bash 'envs' file.
+# All these export statements are directly compatible with Zsh.
+
+# Editor used by CLI
+export EDITOR="nvim"
+export SUDO_EDITOR="$EDITOR"

@@ -1,0 +1,33 @@
+# This file contains integrations for mise, zoxide, and fzf,
+# migrated from your original Bash 'init' section.
+# It is sourced by your main ~/.zshrc.
+
+# --- Mise (rtx) Integration ---
+# Mise automatically detects Zsh and provides the correct activation script.
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
+fi
+
+# --- Zoxide Integration ---
+# Zoxide also automatically detects Zsh and provides the correct initialization script.
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
+# --- FZF Integration ---
+# Oh My Zsh's 'fzf' plugin (enabled in ~/.zshrc) handles most of this.
+# However, if you're not using OMZ's fzf plugin or want to ensure specific paths,
+# you could add them here. For a standard OMZ setup, the plugin is sufficient.
+# The original Bash paths for fzf completions/key-bindings were:
+# /usr/share/bash-completion/completions/fzf
+# /usr/share/fzf/key-bindings.bash
+# For Zsh, these are typically handled by OMZ's fzf plugin, or found at:
+# /usr/share/fzf/shell/completion.zsh
+# /usr/share/fzf/shell/key-bindings.zsh
+# If you are NOT using the 'fzf' plugin in Oh My Zsh, uncomment and use these:
+# if [[ -f /usr/share/fzf/shell/completion.zsh ]]; then
+#   source /usr/share/fzf/shell/completion.zsh
+# fi
+# if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
+#   source /usr/share/fzf/shell/key-bindings.zsh
+# fi
