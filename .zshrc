@@ -1,6 +1,17 @@
 # This is your main Zsh configuration file, consolidated for minimal files.
 # It integrates Oh My Zsh and all your migrated Bash settings.
 
+# --- IMPORTANT: Manual Plugin Installation ---
+# The following plugins are not bundled with Oh My Zsh and need to be cloned manually.
+# Run these commands in your terminal BEFORE restarting Zsh with this config:
+
+# For 'zsh-autosuggestions':
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# For 'zsh-syntax-highlighting':
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# --- End Manual Plugin Installation ---
+
 # --- Oh My Zsh Setup ---
 # This section initializes Oh My Zsh. DO NOT MODIFY these lines.
 # The ZSH variable points to your Oh My Zsh installation directory.
@@ -27,6 +38,40 @@ plugins=(
 # Source Oh My Zsh. This line must be present and near the beginning.
 source $ZSH/oh-my-zsh.sh
 # --- End Oh My Zsh Setup ---
+
+# --- Zsh Line Editor (ZLE) and Completion Settings ---
+# These settings are Zsh's way of handling inputrc configurations and Bash's shopt commands.
+# Moved here to ensure they are set AFTER Oh My Zsh's core initialization.
+
+# History control (equivalent to Bash's shopt -s histappend and HISTCONTROL)
+setopt append_history      # Append to history file, don't overwrite
+setopt hist_ignore_dups    # Don't record duplicate commands in history
+setopt hist_ignore_space   # Don't record lines starting with a space
+setopt share_history       # Share history across all Zsh sessions
+HISTSIZE=32768             # Number of lines or commands to store in history
+HISTFILESIZE="${HISTSIZE}" # Maximum number of lines contained in the history file
+
+# Completion settings (Zsh's way of handling inputrc 'set' options)
+setopt auto_cd               # If a command is a directory, cd to it
+setopt auto_list             # Automatically list choices on ambiguous completion
+setopt auto_menu             # Automatically use menu completion
+setopt complete_in_word      # Complete from cursor position
+setopt no_case_glob          # Case-insensitive globbing (like 'set completion-ignore-case on')
+setopt mark_symlinked_dirs   # Append / to symlinked directories (like 'set mark-symlinked-directories on')
+setopt no_dot_glob           # Don't autocomplete hidden files unless pattern starts with dot (like 'set match-hidden-files off')
+setopt always_to_end_of_line # Move cursor to end of line on completion (similar to 'set skip-completed-text on' in Bash Readline)
+
+# Key bindings (equivalent to inputrc arrow key bindings)
+# These are often handled by OMZ plugins like zsh-autosuggestions or history-substring-search.
+# If you want to ensure them, you can add them:
+bindkey '^[[A' history-search-backward # Up arrow
+bindkey '^[[B' history-search-forward  # Down arrow
+bindkey '^[[C' forward-char            # Right arrow
+bindkey '^[[D' backward-char           # Left arrow
+
+# Note: Bash-specific inputrc options like `set skip-completed-text on` and
+# `set colored-stats on` are handled by Zsh's `setopt` equivalents and OMZ plugins.
+# The `set +h` from your original 'shell' file is a Bash-ism and is not needed in Zsh.
 
 # --- Custom Environment Variables ---
 # These are environment variables copied directly from your Bash setup.
@@ -197,36 +242,3 @@ precmd() {
   # Set the terminal title to the current working directory
   print -P "\e]0;%~\a"
 }
-
-# --- Zsh Line Editor (ZLE) and Completion Settings ---
-# These settings are Zsh's way of handling inputrc configurations and Bash's shopt commands.
-
-# History control (equivalent to Bash's shopt -s histappend and HISTCONTROL)
-setopt append_history      # Append to history file, don't overwrite
-setopt hist_ignore_dups    # Don't record duplicate commands in history
-setopt hist_ignore_space   # Don't record lines starting with a space
-setopt share_history       # Share history across all Zsh sessions
-HISTSIZE=32768             # Number of lines or commands to store in history
-HISTFILESIZE="${HISTSIZE}" # Maximum number of lines contained in the history file
-
-# Completion settings (Zsh's way of handling inputrc 'set' options)
-setopt auto_cd               # If a command is a directory, cd to it
-setopt auto_list             # Automatically list choices on ambiguous completion
-setopt auto_menu             # Automatically use menu completion
-setopt complete_in_word      # Complete from cursor position
-setopt no_case_glob          # Case-insensitive globbing (like 'set completion-ignore-case on')
-setopt mark_symlinked_dirs   # Append / to symlinked directories (like 'set mark-symlinked-directories on')
-setopt no_dot_glob           # Don't autocomplete hidden files unless pattern starts with dot (like 'set match-hidden-files off')
-setopt always_to_end_of_line # Move cursor to end of line on completion (similar to 'set skip-completed-text on' in Bash Readline)
-
-# Key bindings (equivalent to inputrc arrow key bindings)
-# These are often handled by OMZ plugins like zsh-autosuggestions or history-substring-search.
-# If you want to ensure them, you can add them:
-bindkey '^[[A' history-search-backward # Up arrow
-bindkey '^[[B' history-search-forward  # Down arrow
-bindkey '^[[C' forward-char            # Right arrow
-bindkey '^[[D' backward-char           # Left arrow
-
-# Note: Bash-specific inputrc options like `set skip-completed-text on` and
-# `set colored-stats on` are handled by Zsh's `setopt` equivalents and OMZ plugins.
-# The `set +h` from your original 'shell' file is a Bash-ism and is not needed in Zsh.

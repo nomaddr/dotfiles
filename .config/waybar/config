@@ -20,7 +20,7 @@
       "on-click": "activate",
       "format": "{icon}",
       "format-icons": {
-        "default": "",
+        "default": "",
         "1": "1",
         "2": "2",
         "3": "3",
@@ -67,7 +67,7 @@
       "format": "{capacity}% {icon}",
       "format-discharging": "{icon}",
       "format-charging":    "{icon}",
-      "format-plugged":     "",
+      "format-plugged":     "",
       "format-icons": {
         "charging": [
           "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"
@@ -76,7 +76,7 @@
           "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"
         ]
       },
-      "format-full": "Charged ",
+      "format-full": "Charged ",
       "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
       "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
       "interval": 5,
@@ -86,14 +86,14 @@
       }
     },
     "bluetooth": {
-      "format": "",
+      "format": "",
       "format-disabled": "󰂲",
-      "format-connected": "",
+      "format-connected": "",
       "tooltip-format": "Devices connected: {num_connections}",
       "on-click": "GTK_THEME=Adwaita-dark blueberry"
     },
     "pulseaudio": {
-      "format": "",
+      "format": "",
       "format-muted": "󰝟",
       "scroll-step": 5,
       "on-click": "GTK_THEME=Adwaita-dark pavucontrol",
