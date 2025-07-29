@@ -1,148 +1,91 @@
-# This is your main Zsh configuration file, consolidated for minimal files.
-# It integrates Oh My Zsh and all your migrated Bash settings.
+# .zshrc - Consolidated and Migrated from .bashrc
 
-# --- IMPORTANT: Manual Plugin Installation ---
-# The following plugins are not bundled with Oh My Zsh and need to be cloned manually.
-# Run these commands in your terminal BEFORE restarting Zsh with this config:
+# --- ZSH Specific Initialization ---
+# This is crucial for Zsh's powerful completion system
+autoload -Uz compinit
+compinit
 
-# For 'zsh-autosuggestions':
-# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# --- Zsh Completion Customization ---
+# Use LS_COLORS for completion list colors
+# This assumes LS_COLORS is already set by eza or dircolors
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
-# For 'zsh-syntax-highlighting':
-# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# --- End Manual Plugin Installation ---
+# Customize the display of the completion menu
+# Show descriptions below each item (e.g., for options)
+zstyle ':completion:*' menu select
 
-# --- Oh My Zsh Setup ---
-# This section initializes Oh My Zsh. DO NOT MODIFY these lines.
-# The ZSH variable points to your Oh My Zsh installation directory.
-export ZSH="$HOME/.oh-my-zsh"
+# Group completions by type (files, directories, commands, etc.)
+zstyle ':completion:*' group-name ''
 
-# Set your Oh My Zsh theme.
-# 'robbyrussell' is the default. You can change this later.
-# For a more advanced and customizable prompt, consider installing powerlevel10k.
-ZSH_THEME="robbyrussell"
+# Add a header for different groups of completions
+zstyle ':completion:*:manuals' tag-order 'manuals'
+zstyle ':completion:*:options' tag-order 'options'
+zstyle ':completion:*:parts' tag-order 'parts'
+zstyle ':completion:*:parameters' tag-order 'parameters'
+zstyle ':completion:*:corrections' tag-order 'corrections'
+zstyle ':completion:*:approx-patterns' tag-order 'approximate patterns'
+zstyle ':completion:*:urls' tag-order 'URLs'
+zstyle ':completion:*:default' tag-order 'default'
+zstyle ':completion:*:descriptions' format '%B%d%b' # Bold description
 
-# List of Oh My Zsh plugins to load.
-# These plugins provide Zsh-specific enhancements and replace many manual configurations.
-# - git: Provides many useful Git aliases and functions.
-# - zsh-autosuggestions: Suggests commands as you type based on your history.
-# - zsh-syntax-highlighting: Highlights commands as you type for better readability.
-# - fzf: Integrates fzf with Zsh, providing key-bindings and completions.
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  fzf
-)
+# More subtle separators
+zstyle ':completion:*:*:*:*:processes' command 'ps -axco pid,command'
 
-# Source Oh My Zsh. This line must be present and near the beginning.
-source $ZSH/oh-my-zsh.sh
-# --- End Oh My Zsh Setup ---
+# Hide auto-completion menu if only one option (useful if you don't want it to immediately jump)
+# setopt noautomenu # You might have this already if you prefer bash-like behavior
 
-# --- Zsh Line Editor (ZLE) and Completion Settings ---
-# These settings are Zsh's way of handling inputrc configurations and Bash's shopt commands.
-# Moved here to ensure they are set AFTER Oh My Zsh's core initialization.
+# To see a simple list on first tab, then menu on second
+setopt auto_menu # Show completion menu on subsequent tab presses
+setopt menu_complete # Cycle through completions on tab
 
-# History control (equivalent to Bash's shopt -s histappend and HISTCONTROL)
-setopt append_history      # Append to history file, don't overwrite
-setopt hist_ignore_dups    # Don't record duplicate commands in history
-setopt hist_ignore_space   # Don't record lines starting with a space
-setopt share_history       # Share history across all Zsh sessions
-HISTSIZE=32768             # Number of lines or commands to store in history
-HISTFILESIZE="${HISTSIZE}" # Maximum number of lines contained in the history file
+# If you want to see the list immediately after first tab
+setopt auto_list
 
-# Completion settings (Zsh's way of handling inputrc 'set' options)
-setopt auto_cd               # If a command is a directory, cd to it
-setopt auto_list             # Automatically list choices on ambiguous completion
-setopt auto_menu             # Automatically use menu completion
-setopt complete_in_word      # Complete from cursor position
-setopt no_case_glob          # Case-insensitive globbing (like 'set completion-ignore-case on')
-setopt mark_symlinked_dirs   # Append / to symlinked directories (like 'set mark-symlinked-directories on')
-setopt no_dot_glob           # Don't autocomplete hidden files unless pattern starts with dot (like 'set match-hidden-files off')
-setopt always_to_end_of_line # Move cursor to end of line on completion (similar to 'set skip-completed-text on' in Bash Readline)
+# Load Zsh's history configuration
+setopt APPEND_HISTORY     # Append history to the history file
+setopt HIST_IGNORE_DUPS   # Ignore duplicate commands in history (like Bash's HISTCONTROL=ignoreboth)
+setopt HIST_IGNORE_SPACE  # Don't add commands starting with a space to history
+setopt EXTENDED_HISTORY   # Store history with timestamps
+setopt INC_APPEND_HISTORY # Save history after each command
+setopt SHARE_HISTORY      # Share history across all sessions
 
-# Key bindings (equivalent to inputrc arrow key bindings)
-# These are often handled by OMZ plugins like zsh-autosuggestions or history-substring-search.
-# If you want to ensure them, you can add them:
-bindkey '^[[A' history-search-backward # Up arrow
-bindkey '^[[B' history-search-forward  # Down arrow
-bindkey '^[[C' forward-char            # Right arrow
-bindkey '^[[D' backward-char           # Left arrow
+HISTSIZE=32768
+SAVEHIST=${HISTSIZE} # Zsh uses SAVEHIST for file size, not HISTFILESIZE
 
-# Note: Bash-specific inputrc options like `set skip-completed-text on` and
-# `set colored-stats on` are handled by Zsh's `setopt` equivalents and OMZ plugins.
-# The `set +h` from your original 'shell' file is a Bash-ism and is not needed in Zsh.
+# --- External Tool Integrations ---
 
-# --- Custom Environment Variables ---
-# These are environment variables copied directly from your Bash setup.
-export CHROME_OZONE_PLATFORM_HINT="auto"
-export EDITOR="nvim"
-export SUDO_EDITOR="$EDITOR"
-
-# --- Path Configuration ---
-# This combines path modifications from your original Bash 'shell' and other files.
-export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$PATH"
-
-# --- Mise (rtx) Integration ---
-# Mise automatically detects Zsh and provides the correct activation script.
+# Mise (rtx) - Multi-language version manager
+# This should activate mise for zsh
 if command -v mise &>/dev/null; then
   eval "$(mise activate zsh)"
 fi
 
-# --- Zoxide Integration ---
-# Zoxide also automatically detects Zsh and provides the correct initialization script.
+# Zoxide - Fast cd command that learns your habits
+# This should initialize zoxide for zsh
 if command -v zoxide &>/dev/null; then
   eval "$(zoxide init zsh)"
 fi
 
-# Ensure prompt is displayed correctly after zoxide cd.
-# This is a common pattern for zoxide in Zsh to re-evaluate the prompt
-# after a successful jump.
-function zd_post_hook() {
-  if type -w chpwd_functions >/dev/null; then
-    chpwd_functions=("$chpwd_functions[@]" "_zd_chpwd_hook")
+# FZF - Fuzzy finder for your shell
+# Zsh completion and key-bindings for fzf.
+# Note: Paths might vary slightly by distribution. Adjust if needed.
+if command -v fzf &>/dev/null; then
+  # Usually, fzf provides its own init script for zsh.
+  # This often includes both completion and key-bindings.
+  if [[ -f /usr/share/fzf/fzf.zsh ]]; then
+    source /usr/share/fzf/fzf.zsh
+  elif [[ -f /usr/local/opt/fzf/shell/completion.zsh ]]; then # Common for Homebrew on macOS/Linux
+    source /usr/local/opt/fzf/shell/completion.zsh
+    source /usr/local/opt/fzf/shell/key-bindings.zsh
+  # Add other potential paths if the above don't work for your system
   fi
-}
-zd_post_hook
+fi
 
-# --- Aliases ---
-# These aliases are copied directly from your Bash 'aliases' file.
-# File system
-alias cl='clear'
-alias ls='eza -lh --group-directories-first --icons=auto'
-alias lsa='ls -a'
-alias lt='eza --tree --level=2 --long --icons --git'
-alias lta='lt -a'
-alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
-alias cd="zd" # This alias calls the zd function defined below
-
-# Directories
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-
-# Tools
-alias n='nvim'
-alias g='git'
-alias d='docker'
-alias r='rails'
-
-# Git
-alias gcm='git commit -m'
-alias gcam='git commit -a -m'
-alias gcad='git commit -a --amend'
-
-# Find packages without leaving the terminal
-alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
-
-# --- Functions ---
-# These functions are copied directly from your Bash 'functions' file.
-
-# Compression
+# --- Compression Functions ---
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
-alias decompress="tar -xzf" # Note: This is an alias, but placed here for related utility
+alias decompress="tar -xzf"
 
-# Write iso file to sd card
+# --- SD Card ISO Writer Function ---
 iso2sd() {
   if [ $# -ne 2 ]; then
     echo "Usage: iso2sd <input_file> <output_device>"
@@ -151,11 +94,11 @@ iso2sd() {
     lsblk -d -o NAME | grep -E '^sd[a-z]' | awk '{print "/dev/"$1}'
   else
     sudo dd bs=4M status=progress oflag=sync if="$1" of="$2"
-    sudo eject "$2" # Ensure output device is quoted
+    sudo eject "$2" # Use quotes for safety, as per good practice
   fi
 }
 
-# Create a desktop launcher for a web app
+# --- Web App Launcher Functions ---
 web2app() {
   if [ "$#" -ne 3 ]; then
     echo "Usage: web2app <AppName> <AppURL> <IconURL> (IconURL must be in PNG -- use https://dashboardicons.com)"
@@ -206,39 +149,116 @@ web2app-remove() {
   rm "$ICON_PATH"
 }
 
-# Ensure changes to ~/.XCompose are immediately available
+# --- XCompose Refresh Function ---
 refresh-xcompose() {
   pkill fcitx5
   setsid fcitx5 &>/dev/null &
 }
 
-# Custom zd function (from your original aliases file)
-# This function relies on zoxide, which is initialized above.
+# --- Prompt Configuration ---
+# Zsh has a more powerful prompt system. This recreates your Bash prompt.
+# It sets the window title to the current working directory.
+# And the prompt itself to [CurrentDir] 
+# The unicode character `\uf0a9` (Powerline caret) should work if your font supports it.
+
+# Technicolor dreams (Sets TERM for color, often done by system setup)
+# This was 'force_color_prompt=yes' and 'color_prompt=yes' in bash,
+# but Zsh handles colors automatically if LS_COLORS/TERM are set.
+
+# Set window title pre-command (runs before each prompt)
+precmd() { print -P "\e]1;%d\a"; }
+# Set prompt string (PS1)
+PS1=$'[%1~]\uf0a9 ' # %1~ is Zsh's equivalent of Bash's \W (truncated current directory)
+
+# --- Environment Variables ---
+export EDITOR="nvim"
+export SUDO_EDITOR="$EDITOR"
+
+# Set complete PATH
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$PATH"
+
+# Disable command hashing (Bash's `set +h` is Zsh's `unsetopt hashall`)
+unsetopt hashall
+
+# --- Aliases and Functions ---
+
+# File system
+alias cl='clear'
+alias ls='eza -lh --group-directories-first --icons=auto'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
+alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+
+# cd alias with zoxide integration
+alias cd="zd"
 zd() {
   if [ $# -eq 0 ]; then
     builtin cd ~ && return
   elif [ -d "$1" ]; then
     builtin cd "$1"
   else
-    # The printf \U000F17A9 might be specific to your terminal/font setup.
-    # If it causes issues, remove it.
+    # Ensure zoxide is correctly initialized for 'z' command to work (handled above)
     z "$@" && printf " \U000F17A9 " && pwd || echo "Error: Directory not found"
   fi
 }
-
-# --- Prompt Configuration ---
-# This section defines your Zsh prompt, migrated from your Bash 'prompt' file.
-# Zsh's prompt system is different from Bash's.
-# Bash-specific variables like force_color_prompt and color_prompt are removed.
-
-# Basic Zsh prompt:
-# %~: current working directory (tildified)
-# \uf0a9: A Nerd Font glyph (check if your terminal font supports it)
-PROMPT='[%~]\uf0a9 '
-
-# Function to set the terminal window/pane title (similar to your Bash PS1 setup)
-# This uses Zsh's precmd function, which runs before each prompt.
-precmd() {
-  # Set the terminal title to the current working directory
-  print -P "\e]0;%~\a"
+open() {
+  xdg-open "$@" >/dev/null 2>&1
 }
+
+# Directories
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Tools
+alias n='nvim'
+alias g='git'
+alias d='docker'
+alias r='rails'
+
+# Git
+alias gcm='git commit -m'
+alias gcam='git commit -a -m'
+alias gcad='git commit -a --amend'
+
+# Find packages without leaving the terminal
+alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
+
+# --- Zsh Readline/Completion Settings ---
+# These Bash `set` commands are translated to Zsh `setopt` and `zstyle` where applicable.
+
+# Case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Show all completion results at once
+setopt AUTO_MENU             # Automatically use the menu completion when the tab key is pressed
+setopt AUTO_LIST             # Automatically list choices on an ambiguous completion
+setopt NO_ALWAYS_LAST_PROMPT # Don't page completions unless necessary
+
+# Display length for prefix (Zsh handles this somewhat automatically)
+zstyle ':completion:*' menu select=long # Shows full items in completion menu, if space
+
+# Show extra file information (similar to Bash's visible-stats)
+setopt LIST_TYPES # Show file types in completions (e.g., / for dirs, * for executables)
+setopt MARK_DIRS  # Append a slash to directory names in completions
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+setopt NO_GLOB_DOTS # Don't include filenames beginning with '.' in glob expansion
+
+# --- Zsh Keybindings ---
+# These replace your Bash bind commands.
+
+# Arrow keys for history search (similar to Bash's history-search-backward/forward)
+bindkey '^[[A' history-search-backward # Up arrow
+bindkey '^[[B' history-search-forward  # Down arrow
+# Standard cursor movement (usually default, but explicit for clarity)
+bindkey '^[[C' forward-char  # Right arrow
+bindkey '^[[D' backward-char # Left arrow
+
+# Be more intelligent when autocompleting by also looking at the text after the cursor
+setopt AUTO_PARAM_SLASH # If the cursor is after a directory, auto-insert a slash on completion
+
+# Coloring for tab completions. Zsh usually handles this via LS_COLORS if set.
+# No direct `setopt LIST_COLORS` as in Bash. `LIST_TYPES` (set above) helps with markers.
+# For full coloring, ensure LS_COLORS is set by your system's default environment.

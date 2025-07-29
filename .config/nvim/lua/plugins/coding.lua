@@ -8,7 +8,7 @@ return {
         -- Defaults
         enable_close = true, -- Auto close tags
         enable_rename = true, -- Auto rename pairs of tags
-        enable_close_on_slash = false -- Auto close on trailing </
+        enable_close_on_slash = false, -- Auto close on trailing </
       },
     },
   },
@@ -67,7 +67,7 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     ft = "http",
     config = function()
-      require("rest-nvim").setup({
+      vim.g.rest_nvim({
         result_split_horizontal = false,
         result_split_in_place = false,
         skip_ssl_verification = false,
@@ -85,7 +85,7 @@ return {
             json = "jq",
             html = function(body)
               return vim.fn.system({ "tidy", "-i", "-q", "-" }, body)
-            end
+            end,
           },
         },
       })
@@ -141,7 +141,7 @@ return {
     config = function()
       -- Load the snippets
       require("luasnip.loaders.from_vscode").lazy_load({
-        paths = { vim.fn.stdpath("data") .. "/lazy/vim-react-snippets" }
+        paths = { vim.fn.stdpath("data") .. "/lazy/vim-react-snippets" },
       })
     end,
   },
@@ -302,14 +302,12 @@ return {
                   "toggleterm",
                   direction = "horizontal",
                   autos_croll = true,
-                  quit_on_exit = "success"
-                }
+                  quit_on_exit = "success",
+                },
               }, -- options to pass into the `overseer.new_task` command
               on_new_task = function(task)
-                require("overseer").open(
-                  { enter = false, direction = "right" }
-                )
-              end,   -- a function that gets overseer.Task when it is created, before calling `task:start`
+                require("overseer").open({ enter = false, direction = "right" })
+              end, -- a function that gets overseer.Task when it is created, before calling `task:start`
             },
             terminal = {
               name = "Main Terminal",
@@ -352,11 +350,10 @@ return {
                   "toggleterm",
                   direction = "horizontal",
                   autos_croll = true,
-                  quit_on_exit = "success"
-                }
+                  quit_on_exit = "success",
+                },
               }, -- options to pass into the `overseer.new_task` command
-              on_new_task = function(task)
-              end,   -- a function that gets overseer.Task when it is created, before calling `task:start`
+              on_new_task = function(task) end, -- a function that gets overseer.Task when it is created, before calling `task:start`
             },
             terminal = {
               name = "Main Terminal",
@@ -432,7 +429,7 @@ return {
         executable = {
           command = "codelldb",
           args = { "--port", "${port}" },
-        }
+        },
       }
 
       dap.configurations.cpp = {
