@@ -5,6 +5,9 @@
 autoload -Uz compinit
 compinit
 
+autoload -Uz vcs_info
+precmd_functions+=(vcs_info)
+
 # --- Zsh Completion Customization ---
 # Use LS_COLORS for completion list colors
 # This assumes LS_COLORS is already set by eza or dircolors
@@ -166,10 +169,10 @@ refresh-xcompose() {
 # but Zsh handles colors automatically if LS_COLORS/TERM are set.
 
 # Set window title pre-command (runs before each prompt)
-precmd() { print -P "\e]1;%d\a"; }
+precmd() { print -Pn "\e]1;%d\a"; }
 # Set prompt string (PS1)
-PS1=$'[%1~]\uf0a9 ' # %1~ is Zsh's equivalent of Bash's \W (truncated current directory)
-
+ PS1=$'[%1~]\uf0a9 ' # %1~ is Zsh's equivalent of Bash's \W (truncated current directory)
+# PS1=$'%F{cyan}%n%f@%F{green}%m%f:%F{blue}%~%f ${vcs_info_msg_0_}\n[%1~]\uf0a9 '
 # --- Environment Variables ---
 export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
@@ -183,7 +186,7 @@ unsetopt hashall
 # --- Aliases and Functions ---
 
 # File system
-alias cl='clear'
+alias cl='clear && fastfetch'
 alias ls='eza -lh --group-directories-first --icons=auto'
 alias lsa='ls -a'
 alias lt='eza --tree --level=2 --long --icons --git'
