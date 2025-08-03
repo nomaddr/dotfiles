@@ -1,0 +1,43 @@
+/* Base16 Black Metal (Gorgoroth) - Wofi CSS */
+
+@define-color selected-text  #000000; /* selection_foreground */
+@define-color text           #c1c1c1; /* foreground */
+@define-color base           #000000; /* background */
+@define-color border         #c1c1c1; /* foreground (or active_border_color #333333 if you prefer darker border) */
+
+window {
+    background-color: @base;
+    border-color: @border;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 10px;
+}
+
+#input {
+    background-color: #121212; /* inactive_border_color or color18 */
+    color: @text;
+    border-color: #222222; /* color19 */
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+#entry {
+    color: @text;
+    background-color: transparent;
+    padding: 5px 10px;
+}
+
+#entry:selected {
+    background-color: @border; /* selection_background */
+    color: @selected-text;
+    border-radius: 5px;
+}
+
+#scroll {
+    border-color: @border;
+}
+
+#text {
+    margin-left: 8px; /* Adjust if your font needs more space */
+}
