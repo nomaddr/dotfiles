@@ -178,12 +178,13 @@ export EDITOR="nvim"
 export SUDO_EDITOR="$EDITOR"
 
 # Set complete PATH
-export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:$PATH"
-
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/.local/share/omarchy/bin:./bin:$PATH" 
 # Disable command hashing (Bash's `set +h` is Zsh's `unsetopt hashall`)
 unsetopt hashall
 
 # --- Aliases and Functions ---
+# Omarchy Theme Set wrapper
+# alias omarchy-theme-set='~/bin/omarchy-theme-set-wrapper' 
 
 # File system
 alias cl='clear && fastfetch'
