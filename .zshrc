@@ -1,5 +1,6 @@
 # .zshrc - Consolidated and Migrated from .bashrc
 
+
 # --- ZSH Specific Initialization ---
 # This is crucial for Zsh's powerful completion system
 autoload -Uz compinit
